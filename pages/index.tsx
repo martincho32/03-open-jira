@@ -1,6 +1,6 @@
 import { Layout } from '@/components/layouts'
 import { Grid, Card, CardHeader, CardContent } from '@mui/material'
-import { EntryList } from '../components/ui';
+import { EntryList, NewEntry } from '../components/ui';
 
 export default function HomePage() {
   return (
@@ -12,8 +12,7 @@ export default function HomePage() {
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
             <CardHeader title='Pendientes' />
               
-              {/* Agragar nueva entrada */}
-              {/*  Listado de las entradas */}
+              <NewEntry status='pending' />
               <EntryList status='pending' />
 
           </Card>  
@@ -22,9 +21,8 @@ export default function HomePage() {
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
             <CardHeader title='En progreso' />
               
-              {/* Agragar nueva entrada */}
-              {/*  Listado de las entradas */}
-              <EntryList status='in-progress' />
+            {/* <NewEntry status='in-progress' /> */}
+            <EntryList status='in-progress' />
 
           </Card>  
         </Grid>
@@ -32,8 +30,7 @@ export default function HomePage() {
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
             <CardHeader title='Completadas' />
               
-              {/* Agragar nueva entrada */}
-              {/*  Listado de las entradas */}
+              {/* <NewEntry status='finished' /> */}
               <EntryList status='finished' />
 
           </Card>  
