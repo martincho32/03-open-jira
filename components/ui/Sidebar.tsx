@@ -18,13 +18,13 @@ const menuItems = ["Inbox", "Starred", "Send Email", "Draft"];
 
 export const Sidebar = () => {
 
-  const { sidemenuOpen, closeSideMenu } = useContext(UIContext)
+  const { sideMenuOpen, closeSideMenu } = useContext(UIContext)
 
 
   return (
     <Drawer
       anchor="left"
-      open={ sidemenuOpen }
+      open={ sideMenuOpen }
       onClose={ closeSideMenu }
     >
       <Box sx={{ width: 250 }}>
