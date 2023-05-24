@@ -1,12 +1,15 @@
 import { Card, Typography, CardContent, CardActionArea, CardActions } from '@mui/material';
 import { Entry } from '@/interfaces';
-import { FC, DragEvent } from 'react';
+import { FC, DragEvent, useContext } from 'react';
+import { UIContext } from '@/context/ui';
 
 interface Props {
   entry: Entry;
 }
 
 export const EntryCard: FC<Props> = ({ entry }) => {
+
+  const { startDragging, endDragging } = useContext( UIContext )
   const { description, createdAt } = entry;
   const creationDate = new Date( createdAt ).toLocaleDateString("es-AR", {
     weekday: "long", // narrow, short
@@ -16,12 +19,12 @@ export const EntryCard: FC<Props> = ({ entry }) => {
   })
   
   const onDragStart = (event: DragEvent) => {
-    // todo: modificar el estado para indicar que estoy haciendo drag
-    event.dataTransfer.setData('text', entry._id)
+    event.dataTransfer.setData('text', entry._id);
+    startDragging();
   }
 
   const onDragEnd = () => {
-    //todo: cancelar onDrag
+    endDragging();
   }
 
   return (
