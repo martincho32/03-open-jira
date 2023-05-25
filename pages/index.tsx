@@ -1,8 +1,9 @@
 import { Layout } from '@/components/layouts'
-import { Grid, Card, CardHeader, CardContent } from '@mui/material'
+import { Grid, Card, CardHeader } from '@mui/material'
 import { EntryList, NewEntry } from '../components/ui';
 
 export default function HomePage() {
+
   return (
     <Layout title='Home - OpenJira'>
       
