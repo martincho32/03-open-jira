@@ -3,8 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
   ok: boolean;
-  message: string;
-  secret: string;
+  message: string | string[];
 }
 
 export default function handler(
@@ -12,9 +11,10 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
 
-  res.status(200).json({
-    ok: true,
-    message: "hola perreque",
-    secret: process.env.SECRET_KEY || 'no hay método'
+  const { message = 'Bad request' } = req.query
+
+  res.status(400).json({
+    ok: false,
+    message,
   })
 }
