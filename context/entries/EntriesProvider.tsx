@@ -54,16 +54,7 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
 
   
   const deleteEntry = async (id: string, showSnackbar = false) => {
-    const action = (snackbarId: any) => (
-      <>
-        <button onClick={() => { alert(`I belong to snackbar with id ${snackbarId}`); }}>
-          Undo
-        </button>
-        <button onClick={() => { closeSnackbar(snackbarId) }}>
-          Dismiss
-        </button>
-      </>
-    );
+    
     try {
       const { data } = await entriesApi.delete<Entry>(`/entries/${id}`, {
       });
@@ -77,8 +68,6 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
             vertical: "top",
             horizontal: "right"
           },
-          action,
-          
         });
         
       }
