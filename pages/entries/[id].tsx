@@ -22,6 +22,8 @@ import { Entry, EntryStatus } from "@/interfaces";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { dbEntries } from "@/database";
 import { EntriesContext } from '@/context/entries';
+import { dateFunctions } from '@/utils';
+import { useRouter } from 'next/router';
 
 
 const validStatus: EntryStatus[] = ["pending", "in-progress", "finished"];
@@ -33,10 +35,12 @@ interface Props {
 
 export const EntryPage: FC<Props> = ({ entry }) => {
   
-  const { updateEntry } = useContext(EntriesContext)
+  const { updateEntry, deleteEntry } = useContext(EntriesContext)
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [isTouched, setIsTouched] = useState(false);
+  const router = useRouter();
+
 
   const isNotValid = useMemo(
     () => inputValue.length <= 0 && isTouched,
@@ -62,14 +66,11 @@ export const EntryPage: FC<Props> = ({ entry }) => {
     updateEntry(updatedEntry, true);
   };
 
-  const creationDate = new Date( entry.createdAt ).toLocaleDateString("es-AR", {
-    weekday: "long", // narrow, short
-    year: "numeric", // 2-digit
-    month: "short", // numeric, 2-digit, narrow, long
-    day: "numeric", // 2-digit
-    hour: "2-digit",
-    minute: "2-digit"
-  })
+  const onDelete = () => {
+    deleteEntry(entry._id, true);
+    router.push("/");
+
+  }
 
   return (
     <Layout title={ inputValue.substring(0, 20) + "..." }>
@@ -79,7 +80,7 @@ export const EntryPage: FC<Props> = ({ entry }) => {
             <Card>
               <CardHeader
                 title={`Entrada:`}
-                subheader={`Creada el: ${creationDate}`}
+                subheader={`Creada hace: ${dateFunctions.getFormatDistanceToNow( entry.createdAt )}`}
               />
               <CardContent>
                 <TextField
@@ -131,8 +132,9 @@ export const EntryPage: FC<Props> = ({ entry }) => {
             position: "fixed",
             bottom: 30,
             right: 30,
-            backgroundColor: "",
+            backgroundColor: "error.light",
           }}
+          onClick={ onDelete }
         >
           <DeleteOutlineOutlinedIcon />
         </IconButton>
@@ -141,6 +143,8 @@ export const EntryPage: FC<Props> = ({ entry }) => {
   );
 };
 
+ 
+// 6471903982fb3dd3e2f773b8
 
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request time

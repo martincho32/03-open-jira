@@ -3,6 +3,8 @@ import { Entry } from '@/interfaces';
 import { FC, DragEvent, useContext } from 'react';
 import { UIContext } from '@/context/ui';
 import { useRouter } from 'next/router';
+import { dateFunctions } from '@/utils';
+
 
 interface Props {
   entry: Entry;
@@ -12,12 +14,8 @@ export const EntryCard: FC<Props> = ({ entry }) => {
 
   const { startDragging, endDragging } = useContext( UIContext )
   const { description, createdAt } = entry;
-  const creationDate = new Date( createdAt ).toLocaleDateString("es-AR", {
-    weekday: "long", // narrow, short
-    year: "numeric", // 2-digit
-    month: "short", // numeric, 2-digit, narrow, long
-    day: "numeric" // 2-digit
-  })
+  
+
 
   const router = useRouter();
   
@@ -49,7 +47,7 @@ export const EntryCard: FC<Props> = ({ entry }) => {
         </CardContent>
         <CardActions sx={{ display: 'flex', justifyContent: 'end', paddingRight: 2 }}>
           <Typography variant='body2'>
-            { creationDate }
+            Hace { dateFunctions.getFormatDistanceToNow( createdAt ) }
           </Typography>
         </CardActions>
       </CardActionArea>
