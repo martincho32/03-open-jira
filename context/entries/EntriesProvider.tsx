@@ -52,6 +52,41 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
     dispatch({ type: "[Entry] Refresh-Data", payload: data });
   };
 
+  
+  const deleteEntry = async (id: string, showSnackbar = false) => {
+    const action = (snackbarId: any) => (
+      <>
+        <button onClick={() => { alert(`I belong to snackbar with id ${snackbarId}`); }}>
+          Undo
+        </button>
+        <button onClick={() => { closeSnackbar(snackbarId) }}>
+          Dismiss
+        </button>
+      </>
+    );
+    try {
+      const { data } = await entriesApi.delete<Entry>(`/entries/${id}`, {
+      });
+      dispatch({ type: "[Entry] Delete-Entry", payload: data._id });
+      await refreshEntries();
+      if (showSnackbar) {
+        enqueueSnackbar("Entrada eliminada", {
+          variant: "warning",
+          autoHideDuration: 1500,
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "right"
+          },
+          action,
+          
+        });
+        
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   useEffect(() => {
     refreshEntries();
   }, []);
@@ -63,6 +98,7 @@ export const EntriesProvider: FC<PropsWithChildren> = ({ children }) => {
         //Methods
         addNewEntry,
         updateEntry,
+        deleteEntry
       }}
     >
       {children}
