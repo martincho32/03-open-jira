@@ -144,8 +144,6 @@ export const EntryPage: FC<Props> = ({ entry }) => {
 };
 
  
-// 6471903982fb3dd3e2f773b8
-
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request time
 
